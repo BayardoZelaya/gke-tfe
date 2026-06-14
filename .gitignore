@@ -1,1 +1,8 @@
 .vscode
+
+secret.backend.tfvars
+.backend.tfvars
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.backup
