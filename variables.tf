@@ -11,3 +11,11 @@ variable "gcp_region" {
 variable "gcp_bucket_name" {
   default = "tfe-backend"
 }
+
+variable "vpc_subnet_cidr_range" {
+  description = "subnet cidr range"
+}
+
+variable "node_count" {
+  description = "count of gke nodes"
+}

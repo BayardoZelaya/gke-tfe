@@ -2,7 +2,7 @@ name: "Terraform Automation"
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "feature/*"]
   pull_request:
     branches: ["main"]
 
@@ -47,8 +47,12 @@ jobs:
       - name: "Terraform FMT"
         run: "terraform rmt -check"
 
-      - name: "Terraform Init"
-        run: "terraform init -input=false"
+      - name: 'Terraform Init'
+        run: |
+          terraform init -input=false \
+            -backend-config="bucket=${{ env.GCP_TF_BUCKET }}" \
+            -backend-config="prefix=terraform/state"
+
 
       - name: "Terraform Plan"
         id: "plan"
