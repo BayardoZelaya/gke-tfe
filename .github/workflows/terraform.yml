@@ -1,0 +1,59 @@
+name: "Terraform Automation"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform:
+    name: "Terraform Plan & Apply"
+    runs-on: "ubuntu-latest"
+
+    environment: dev
+
+    env:
+      GCP_PROJECT_ID: ${{vars.GCP_PROJECT_ID}}
+      GCP_SERVICE_ACCOUNT: ${{vars.GCP_SERVICE_ACCOUNT}}
+      GCP_PROJECT_NUMBER: ${{vars.GCP_PROJECT_NUMBER}}
+      GCP_TF_BUCKET: ${{vars.GCP_TF_BUCKET}}
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: "Checkout Code"
+        uses: "actions/checkout@v4"
+
+      - name: "Authenticate to Google Cloud"
+        id: "auth"
+        uses: "google-github-actions/auth@v3"
+        with:
+          project_id: ${{env.GCP_PROJECT_ID}}
+          service_account: ${{env.GCP_SERVICE_ACCOUNT}}
+          workload_identity_provider: "projects/${{ env.GCP_PROJECT_NUMBER}}/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
+
+      - name: "Setup Terraform"
+        uses: "hashicorp/setup-terraform@v4"
+        with:
+          terraform_version: "1.15.6"
+
+      - name: "Terraform FMT"
+        run: "terraform rmt -check"
+
+      - name: "Terraform Init"
+        run: "terraform init -input=false"
+
+      - name: "Terraform Plan"
+        id: "plan"
+        run: "terraform plan -input=false"
+
+      - name: "Terraform Apply"
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false

@@ -5,9 +5,9 @@ variable "gcp_project_name" {
 }
 
 variable "gcp_region" {
-
+  default = "us-east4"
 }
 
 variable "gcp_bucket_name" {
-
+  default = "tfe-backend"
 }
