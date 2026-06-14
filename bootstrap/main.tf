@@ -39,5 +39,7 @@ module "github_actions_iam" {
     "serviceAccount:github-actions-sa@${var.project_id}.iam.gserviceaccount.com",
   ]
 
-  sa_user_bindings = {}
+  sa_user_bindings = {
+    "serviceAccount:github-actions-sa@${var.project_id}.iam.gserviceaccount.com" = "171986717256-compute@developer.gserviceaccount.com"
+  }
 }
