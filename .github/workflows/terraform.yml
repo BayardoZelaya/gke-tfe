@@ -57,6 +57,12 @@ jobs:
         id: "plan"
         run: "terraform plan -input=false"
 
+      - name: "Terraform Apply IAM"
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          terraform apply -auto-approve -input=false -target=module.github_actions_iam
+          sleep 60
+
       - name: "Terraform Apply"
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
