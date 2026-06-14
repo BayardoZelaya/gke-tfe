@@ -8,16 +8,12 @@ module "github_actions_iam" {
 
   permissions = [
     # GKE — data source + cluster + node pool lifecycle
+    # Note: node pool CRUD is gated by container.clusters.update, not separate nodePools.* permissions
     "container.clusters.create",
     "container.clusters.delete",
     "container.clusters.get",
     "container.clusters.list",
     "container.clusters.update",
-    "container.nodePools.create",
-    "container.nodePools.delete",
-    "container.nodePools.get",
-    "container.nodePools.list",
-    "container.nodePools.update",
     "container.operations.get",
     "container.operations.list",
 
@@ -37,17 +33,15 @@ module "github_actions_iam" {
 
     # Required by GKE and Terraform providers to read project metadata
     "resourcemanager.projects.get",
-    "resourcemanager.projects.list",
   ]
 
   members = [
     "serviceAccount:github-actions-sa@${var.gcp_project_name}.iam.gserviceaccount.com",
   ]
 
-  # Grant actAs scoped to the GKE node SA only
-  sa_user_bindings = {
-    "serviceAccount:github-actions-sa@${var.gcp_project_name}.iam.gserviceaccount.com" = "${var.gcp_project_name}-compute@developer.gserviceaccount.com"
-  }
+  # sa_user_bindings left empty — the default Compute SA is created by GKE on first cluster apply.
+  # Add the binding here after the cluster exists if node SA impersonation is required.
+  sa_user_bindings = {}
 }
 
 module "vpc" {
