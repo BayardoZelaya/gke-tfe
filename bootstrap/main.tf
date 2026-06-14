@@ -39,6 +39,10 @@ module "github_actions_iam" {
     "serviceAccount:github-actions-sa@${var.project_id}.iam.gserviceaccount.com",
   ]
 
+  extra_roles = [
+    "roles/compute.viewer",
+  ]
+
   sa_user_bindings = {
     "serviceAccount:github-actions-sa@${var.project_id}.iam.gserviceaccount.com" = "171986717256-compute@developer.gserviceaccount.com"
   }
