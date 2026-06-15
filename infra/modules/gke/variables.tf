@@ -31,7 +31,7 @@ variable "node_pools" {
   }))
   default = [{
     name         = "general"
-    machine_type = "e2-standard"
+    machine_type = "e2-medium"
     node_count   = 1
     disk_size_gb = 50
 
