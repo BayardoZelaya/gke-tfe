@@ -13,3 +13,7 @@ output "cluster_ca_certificate" {
   description = "GKE Cluster CA certificate (base64)"
   sensitive   = true
 }
+
+output "node_pool_names" {
+  value = [for k, v in google_container_node_pool.pools : v.name]
+}

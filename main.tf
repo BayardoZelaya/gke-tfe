@@ -16,8 +16,7 @@ module "gke" {
   vpc_name    = module.vpc.network_name
   subnet_name = module.vpc.subnet_names["platform"]
 
-  gke_num_nodes = var.node_count
-
+  node_pools = var.node_pools
 }
 
 module "argocd" {
