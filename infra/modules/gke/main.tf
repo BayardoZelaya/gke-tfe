@@ -10,6 +10,12 @@ resource "google_container_cluster" "primary" {
 
   deletion_protection = false
 
+  node_config {
+    machine_type = "e2-medium"
+    disk_type    = "pd-standard"
+    disk_size_gb = 50
+  }
+
 }
 
 resource "google_container_node_pool" "primary_nodes" {
@@ -35,6 +41,6 @@ resource "google_container_node_pool" "primary_nodes" {
     machine_type = "e2-medium"
     disk_type    = "pd-standard"
     disk_size_gb = 50
-    tags = ["gke-node", "${var.project_id}-gke"]
+    tags         = ["gke-node", "${var.project_id}-gke"]
   }
 }
