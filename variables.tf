@@ -24,3 +24,15 @@ variable "argocd_chart_version" {
   type    = string
   default = "9.5.21"
 }
+
+variable "subnets" {
+  description = "Map of subnet configs"
+
+  type = map(object({
+    cidr             = string
+    region           = string
+    secondary_ranges = optional(map(string), {})
+  }))
+
+}
+

@@ -1,18 +1,20 @@
 module "vpc" {
-  source            = "./infra/modules/vpc"
-  project_id        = var.gcp_project_name
-  region            = var.gcp_region
-  subnet_cidr_range = var.vpc_subnet_cidr_range
+  source     = "./infra/modules/vpc"
+  project_id = var.gcp_project_name
+  region     = var.gcp_region
+  subnets    = var.subnets
 }
 
 module "gke" {
   source = "./infra/modules/gke"
 
+  depends_on = [module.vpc]
+
   project_id = var.gcp_project_name
   region     = var.gcp_region
 
   vpc_name    = module.vpc.network_name
-  subnet_name = module.vpc.subnet_name
+  subnet_name = module.vpc.subnet_names["platform"]
 
   gke_num_nodes = var.node_count
 
