@@ -34,3 +34,9 @@ variable "sa_user_bindings" {
   type        = map(string)
   default     = {}
 }
+
+variable "extra_roles" {
+  description = "List of additional predefined IAM roles to bind to all members alongside the custom role"
+  type        = list(string)
+  default     = []
+}
