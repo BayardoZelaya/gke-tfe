@@ -16,6 +16,10 @@ resource "google_container_cluster" "primary" {
     disk_size_gb = 50
   }
 
+  lifecycle {
+    ignore_changes = [node_config]
+  }
+
 }
 
 resource "google_container_node_pool" "pools" {
