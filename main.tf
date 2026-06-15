@@ -17,3 +17,19 @@ module "gke" {
   gke_num_nodes = var.node_count
 
 }
+
+module "argocd" {
+  source = "./infra/modules/gke-argocd"
+
+  depends_on = [module.gke]
+
+  argocd_chart_version = var.argocd_chart_version
+
+  argocd_values = {
+    server = {
+      service = {
+        type = "ClusterIP"
+      }
+    }
+  }
+}
