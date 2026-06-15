@@ -32,7 +32,7 @@ resource "google_container_node_pool" "primary_nodes" {
       env = var.project_id
     }
 
-    machine_type = "n1-standard-1"
+    machine_type = "e2-medium"
     disk_type    = "pd-standard"
     disk_size_gb = 50
     tags         = ["gke-node", "${var.project_id}-gke"]
