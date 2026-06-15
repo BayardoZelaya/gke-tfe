@@ -41,6 +41,7 @@ module "github_actions_iam" {
 
   extra_roles = [
     "roles/compute.viewer",
+    "roles/container.admin",
   ]
 
   sa_user_bindings = {
