@@ -35,9 +35,6 @@ resource "google_container_node_pool" "primary_nodes" {
     machine_type = "e2-medium"
     disk_type    = "pd-standard"
     disk_size_gb = 50
-    tags         = ["gke-node", "${var.project_id}-gke"]
-    metadata = {
-      disable_legacy_endpoints = "true"
-    }
+    tags = ["gke-node", "${var.project_id}-gke"]
   }
 }
