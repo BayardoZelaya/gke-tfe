@@ -10,11 +10,6 @@ resource "google_container_cluster" "primary" {
 
   deletion_protection = false
 
-  node_config {
-    disk_type    = "pd-standard"
-    disk_size_gb = 50
-  }
-
 }
 
 resource "google_container_node_pool" "primary_nodes" {
