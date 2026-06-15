@@ -19,3 +19,8 @@ variable "vpc_subnet_cidr_range" {
 variable "node_count" {
   description = "count of gke nodes"
 }
+
+variable "argocd_chart_version" {
+  type    = string
+  default = "9.5.21"
+}
