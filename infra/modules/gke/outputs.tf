@@ -6,5 +6,10 @@ output "kubernetes_cluster_name" {
 output "kubernetes_cluster_host" {
   value       = google_container_cluster.primary.endpoint
   description = "GKE Cluster Host"
+}
 
+output "cluster_ca_certificate" {
+  value       = google_container_cluster.primary.master_auth[0].cluster_ca_certificate
+  description = "GKE Cluster CA certificate (base64)"
+  sensitive   = true
 }
